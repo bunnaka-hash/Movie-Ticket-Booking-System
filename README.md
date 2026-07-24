@@ -283,7 +283,7 @@ storage
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/movie-ticket-booking.git
+git clone https://github.com/bunnaka-hash/Movie-Ticket-Booking-System.git
 ```
 
 Go to the project
