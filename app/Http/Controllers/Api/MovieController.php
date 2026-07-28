@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; // optional
+use App\Models\Movie;
+use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
 
 class MovieController extends Controller
 {
@@ -12,38 +15,64 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        $movies = Movie::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Movies retrieved successfully.',
+            'data' => $movies
+        ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMovieRequest $request)
     {
-        //
+        $movie = Movie::create($request->validated());  // This returns only the data that passed validation, making it safer than using $request->all().
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Movie created successfully.',
+            'data' => $movie
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Movie $movie)
     {
-        //
+        return response()->json([
+            'success' => true,
+            'message' => 'Movie retrieved successfully.',
+            'data' => $movie
+        ]);
     }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        //
+        $movie->update($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Movie updated successfully.',
+            'data' => $movie
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Movie $movie)
     {
-        //
+        $movie->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Movie deleted successfully.'
+        ], 200);
     }
 }
