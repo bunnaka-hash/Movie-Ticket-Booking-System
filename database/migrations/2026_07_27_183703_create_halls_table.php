@@ -10,18 +10,26 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('booking_details', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('halls', function (Blueprint $table) {
+        $table->id();
+
+        $table->foreignId('cinema_id')
+              ->constrained()
+              ->onDelete('cascade');
+
+        $table->string('name');
+        $table->integer('total_seats');
+
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking_details');
+        Schema::dropIfExists('halls');
     }
 };

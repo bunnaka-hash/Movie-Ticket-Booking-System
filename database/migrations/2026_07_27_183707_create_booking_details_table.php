@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('seats', function (Blueprint $table) {
+    Schema::create('booking_details', function (Blueprint $table) {
         $table->id();
 
-        $table->foreignId('hall_id')
+        $table->foreignId('booking_id')
               ->constrained()
               ->onDelete('cascade');
 
-        $table->string('seat_number');
-        $table->string('row_name');
-        $table->enum('seat_type', ['regular', 'vip', 'couple'])->default('regular');
+        $table->foreignId('seat_id')
+              ->constrained()
+              ->onDelete('cascade');
+
+        $table->decimal('price', 8, 2);
 
         $table->timestamps();
     });
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seats');
+        Schema::dropIfExists('booking_details');
     }
 };

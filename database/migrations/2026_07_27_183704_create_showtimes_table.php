@@ -11,16 +11,20 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('seats', function (Blueprint $table) {
+    Schema::create('showtimes', function (Blueprint $table) {
         $table->id();
+
+        $table->foreignId('movie_id')
+              ->constrained()
+              ->onDelete('cascade');
 
         $table->foreignId('hall_id')
               ->constrained()
               ->onDelete('cascade');
 
-        $table->string('seat_number');
-        $table->string('row_name');
-        $table->enum('seat_type', ['regular', 'vip', 'couple'])->default('regular');
+        $table->dateTime('start_time');
+        $table->dateTime('end_time');
+        $table->decimal('price', 8, 2);
 
         $table->timestamps();
     });
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seats');
+        Schema::dropIfExists('showtimes');
     }
 };
