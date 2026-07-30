@@ -21,6 +21,7 @@ return new class extends Migration
         $table->string('seat_number');
         $table->string('row_name');
         $table->enum('seat_type', ['regular', 'vip', 'couple'])->default('regular');
+        $table->unique(['hall_id', 'row_name', 'seat_number']);
 
         $table->timestamps();
     });

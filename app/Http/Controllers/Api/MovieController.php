@@ -7,6 +7,7 @@ use Illuminate\Http\Request; // optional
 use App\Models\Movie;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
+use App\Http\Resources\MovieResource;
 
 class MovieController extends Controller
 {
@@ -15,12 +16,12 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::latest()->paginate(10);
 
         return response()->json([
             'success' => true,
             'message' => 'Movies retrieved successfully.',
-            'data' => $movies
+            'data' => MovieResource::collection($movies)
         ], 200);
     }
 
@@ -34,7 +35,7 @@ class MovieController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Movie created successfully.',
-            'data' => $movie
+            'data' => new MovieResource($movie)
         ], 201);
     }
 
@@ -46,7 +47,7 @@ class MovieController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Movie retrieved successfully.',
-            'data' => $movie
+            'data' => new MovieResource($movie)
         ]);
     }
     /**
@@ -59,7 +60,7 @@ class MovieController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Movie updated successfully.',
-            'data' => $movie
+            'data' => new MovieResource($movie)
         ], 200);
     }
 

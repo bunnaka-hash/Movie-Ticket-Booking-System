@@ -15,7 +15,7 @@ class Cinema extends Model
         'phone'
     ];
 
-    public function halls(): HasMany
+    public function halls()
     {
         return $this->hasMany(Hall::class);
     }
