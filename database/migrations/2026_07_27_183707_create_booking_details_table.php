@@ -21,6 +21,7 @@ return new class extends Migration
         $table->foreignId('seat_id')
               ->constrained()
               ->onDelete('cascade');
+        $table->unique(['booking_id', 'seat_id']);
 
         $table->decimal('price', 8, 2);
 
