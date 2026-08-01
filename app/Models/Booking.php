@@ -15,7 +15,8 @@ class Booking extends Model
         'total_price',
         'booking_status',
         'payment_method',
-        'booked_at'
+        'booked_at',
+        'checked_in_at'
     ];
 
     public function user(): BelongsTo

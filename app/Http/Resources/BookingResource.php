@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ShowtimeResource;
+use App\Http\Resources\BookingDetailResource;
 
 class BookingResource extends JsonResource
 {
@@ -14,6 +16,11 @@ class BookingResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user' => [
+                'id' => $this->user?->id,
+                'name' => $this->user?->name,
+                'email' => $this->user?->email,
+            ],
 
             'booking_code' => $this->booking_code,
 

@@ -16,14 +16,30 @@ class ShowtimeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $showtimes = Showtime::with(['movie', 'hall'])->get();
+        $query = Showtime::with(['movie', 'hall']);
+
+        if ($request->filled('movie_id')) {
+            $query->where('movie_id', $request->movie_id);
+        }
+
+        if ($request->filled('hall_id')) {
+            $query->where('hall_id', $request->hall_id);
+        }
+
+        $showtimes = $query->latest()->paginate(10);
 
         return response()->json([
             'success' => true,
             'message' => 'Showtimes retrieved successfully.',
             'data' => ShowtimeResource::collection($showtimes),
+            'pagination' => [
+                'current_page' => $showtimes->currentPage(),
+                'last_page' => $showtimes->lastPage(),
+                'per_page' => $showtimes->perPage(),
+                'total' => $showtimes->total(),
+            ]
         ]);
     }
 

@@ -16,7 +16,7 @@ class HallController extends Controller
      */
     public function index()
     {
-        $halls = Hall::with('cinema')->get();
+        $halls = Hall::with('cinema')->paginate(10);
 
         return response()->json([
             'success' => true,

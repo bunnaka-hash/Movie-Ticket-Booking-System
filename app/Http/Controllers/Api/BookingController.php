@@ -84,21 +84,31 @@ class BookingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bookings = Booking::with([
+        $query = Booking::with([
             'showtime.movie',
             'showtime.hall',
-            'bookingDetails.seat',
+            'bookingDetails.seat'
         ])
-        ->where('user_id', auth()->id())
-        ->latest()
-        ->get();
+        ->where('user_id', auth()->id());
+
+        if ($request->filled('booking_status')) {
+            $query->where('booking_status', $request->booking_status);
+        }
+
+        $bookings = $query->latest()->paginate(10);
 
         return response()->json([
             'success' => true,
             'message' => 'Bookings retrieved successfully.',
             'data' => BookingResource::collection($bookings),
+            'pagination' => [
+                'current_page' => $bookings->currentPage(),
+                'last_page' => $bookings->lastPage(),
+                'per_page' => $bookings->perPage(),
+                'total' => $bookings->total(),
+            ]
         ]);
     }
 

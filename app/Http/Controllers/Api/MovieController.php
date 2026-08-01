@@ -14,15 +14,38 @@ class MovieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::latest()->paginate(10);
+        $query = Movie::query();
+
+        // Search by title
+        if ($request->filled('title')) {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        // Filter by genre
+        if ($request->filled('genre')) {
+            $query->where('genre', $request->genre);
+        }
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $movies = $query->latest()->paginate(10);
 
         return response()->json([
             'success' => true,
             'message' => 'Movies retrieved successfully.',
-            'data' => MovieResource::collection($movies)
-        ], 200);
+            'data' => MovieResource::collection($movies),
+            'pagination' => [
+                'current_page' => $movies->currentPage(),
+                'last_page' => $movies->lastPage(),
+                'per_page' => $movies->perPage(),
+                'total' => $movies->total(),
+            ]
+        ]);
     }
 
     /**

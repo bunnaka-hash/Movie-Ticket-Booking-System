@@ -16,9 +16,15 @@ class CinemaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cinemas = Cinema::with('halls')->get();
+        $query = Cinema::with('halls');
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        $cinemas = $query->paginate(10);
 
         return response()->json([
             'success' => true,

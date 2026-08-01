@@ -17,7 +17,7 @@ class SeatController extends Controller
      */
     public function index()
     {
-        $seats = Seat::with('hall')->get();
+        $seats = Seat::with('hall')->paginate(10);
 
         return response()->json([
             'success' => true,
