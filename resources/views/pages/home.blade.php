@@ -4,19 +4,35 @@
 
 @section('content')
 
-<section class="max-w-7xl mx-auto py-20">
+<section class="relative bg-gray-900 text-white">
 
-    <h1 class="text-5xl font-bold">
+    <div class="absolute inset-0 bg-black/60"></div>
 
-        Book Your Favorite Movies
+    <div class="relative max-w-7xl mx-auto px-6 py-32">
 
-    </h1>
+        <h1 class="text-6xl font-bold leading-tight">
 
-    <p class="text-gray-600 mt-5">
+            Experience Movies<br>
 
-        Welcome to our Movie Ticket Booking System.
+            Like Never Before
 
-    </p>
+        </h1>
+
+        <p class="mt-6 text-xl text-gray-300 max-w-2xl">
+
+            Browse the latest movies, choose your favorite seats,
+            and book tickets online in seconds.
+
+        </p>
+
+        <a href="{{ route('movies.index') }}"
+           class="inline-block mt-8 bg-red-600 hover:bg-red-700 px-8 py-4 rounded-lg text-lg font-semibold">
+
+            Browse Movies
+
+        </a>
+
+    </div>
 
 </section>
 
