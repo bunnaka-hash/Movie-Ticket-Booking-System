@@ -35,7 +35,8 @@
         <aside class="space-y-4">
             <div class="glass-card rounded-xl p-4">
                 <div class="flex gap-3">
-                    <img src="{{ $movie->poster ? (preg_match('/^https?:\/\//', $movie->poster) ? $movie->poster : asset('storage/' . $movie->poster)) : asset('images/poster-placeholder.jpg') }}" alt="poster" class="w-20 h-28 rounded">
+                    <img src="{{ $movie->poster_url }}" alt="poster" class="w-20 h-28 rounded object-cover bg-secondary"
+                         onerror="this.onerror=null; this.src='{{ $movie->poster_placeholder }}';">
                     <div>
                         <h3 class="font-bold">{{ $movie->title }}</h3>
                         <p class="text-sm text-gray-400">{{ $showtime->format ?? 'IMAX' }} • {{ $movie->language ?? 'EN' }}</p>

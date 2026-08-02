@@ -17,42 +17,43 @@
 <!-- Filters & Search -->
 <section class="bg-neutral border-b border-gray-800 py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <form method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <!-- Search -->
-            <div class="relative">
-                <input type="text" placeholder="Search movies..." 
+            <div class="relative md:col-span-2">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search movies..."
                     class="w-full bg-secondary px-4 py-3 rounded text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary">
                 <i class="fas fa-search absolute right-4 top-4 text-gray-500"></i>
             </div>
 
             <!-- Genre Filter -->
-            <select class="bg-secondary px-4 py-3 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary">
+            <select name="genre" class="bg-secondary px-4 py-3 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary">
                 <option value="">All Genres</option>
-                <option value="action">Action</option>
-                <option value="comedy">Comedy</option>
-                <option value="drama">Drama</option>
-                <option value="sci-fi">Sci-Fi</option>
-                <option value="horror">Horror</option>
-                <option value="romance">Romance</option>
+                @foreach ($genres as $genre)
+                    <option value="{{ $genre }}" @selected(request('genre') === $genre)>{{ $genre }}</option>
+                @endforeach
             </select>
 
             <!-- Language Filter -->
-            <select class="bg-secondary px-4 py-3 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary">
+            <select name="language" class="bg-secondary px-4 py-3 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary">
                 <option value="">All Languages</option>
-                <option value="english">English</option>
-                <option value="hindi">Hindi</option>
-                <option value="spanish">Spanish</option>
-                <option value="french">French</option>
+                @foreach ($languages as $language)
+                    <option value="{{ $language }}" @selected(request('language') === $language)>{{ $language }}</option>
+                @endforeach
             </select>
 
-            <!-- Sorting -->
-            <select class="bg-secondary px-4 py-3 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary">
-                <option value="latest">Latest</option>
-                <option value="rating">Highest Rated</option>
-                <option value="popular">Most Popular</option>
-                <option value="coming">Coming Soon</option>
-            </select>
-        </div>
+            <!-- Status -->
+            <div class="flex gap-2">
+                <select name="status" class="flex-1 bg-secondary px-4 py-3 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option value="">All Movies</option>
+                    @foreach (['now_showing' => 'Now Showing', 'coming_soon' => 'Coming Soon', 'ended' => 'Ended'] as $key => $label)
+                        <option value="{{ $key }}" @selected(request('status') === $key)>{{ $label }}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="bg-primary hover:bg-red-700 text-white px-5 rounded font-semibold transition">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+        </form>
     </div>
 </section>
 
@@ -63,7 +64,7 @@
         <div class="mb-8">
             <p class="text-gray-400">
                 <i class="fas fa-film text-primary mr-2"></i>
-                Showing {{ count($movies ?? []) }} movies
+                Showing {{ $movies->count() }} of {{ $movies->total() }} movies
             </p>
         </div>
 
@@ -83,23 +84,9 @@
         </div>
 
         <!-- Pagination -->
-        @if(isset($movies) && count($movies) > 12)
-            <div class="flex justify-center items-center gap-3">
-                <button class="px-4 py-2 bg-secondary hover:bg-primary text-white rounded transition">
-                    <i class="fas fa-chevron-left mr-2"></i>Previous
-                </button>
-                <div class="flex gap-2">
-                    @for ($i = 1; $i <= 3; $i++)
-                        <button class="w-10 h-10 {{ $i === 1 ? 'bg-primary' : 'bg-secondary' }} text-white rounded hover:bg-primary transition">
-                            {{ $i }}
-                        </button>
-                    @endfor
-                </div>
-                <button class="px-4 py-2 bg-secondary hover:bg-primary text-white rounded transition">
-                    Next<i class="fas fa-chevron-right ml-2"></i>
-                </button>
-            </div>
-        @endif
+        <div class="flex justify-center">
+            {{ $movies->links() }}
+        </div>
     </div>
 </section>
 

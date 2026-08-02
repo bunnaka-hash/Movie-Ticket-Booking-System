@@ -36,6 +36,9 @@
                 </div>
                 @auth
                     <div class="flex items-center gap-4">
+                        <a href="{{ route('bookings.index') }}" class="text-gray-300 hover:text-primary transition font-medium">
+                            <i class="fas fa-ticket-alt mr-2"></i>My Tickets
+                        </a>
                         <a href="/profile" class="text-gray-300 hover:text-primary transition text-lg">
                             <i class="fas fa-user-circle"></i>
                         </a>

@@ -2,9 +2,10 @@
 <div class="group">
     <div class="relative overflow-hidden rounded-lg mb-4">
         <!-- Poster Image -->
-        <img src="{{ $movie->poster_url ?? '/images/posters/placeholder.jpg' }}" 
+        <img src="{{ $movie->poster_url }}"
             alt="{{ $movie->title ?? 'Movie Title' }}"
-            class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+            onerror="this.onerror=null; this.src='{{ $movie->poster_placeholder }}';"
+            class="w-full h-80 object-cover bg-secondary group-hover:scale-110 transition duration-300">
         
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">

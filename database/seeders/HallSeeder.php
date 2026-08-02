@@ -2,86 +2,52 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Cinema;
+use App\Models\Hall;
 use Illuminate\Database\Seeder;
 
 class HallSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * Halls are attached to their cinema by name instead of a hard-coded id,
+     * so the seeder still works when the cinemas table is not starting at 1.
      */
     public function run(): void
-{
-    \App\Models\Hall::insert([
+    {
+        $halls = [
+            'Legend Cinema1' => [
+                ['name' => 'Hall 1', 'total_seats' => 120],
+                ['name' => 'Hall 2', 'total_seats' => 100],
+                ['name' => 'VIP Hall', 'total_seats' => 40],
+            ],
+            'Legend Cinema2' => [
+                ['name' => 'Hall 1', 'total_seats' => 100],
+                ['name' => 'Hall 2', 'total_seats' => 120],
+                ['name' => 'VIP Hall', 'total_seats' => 50],
+            ],
+            'Sabay Cinema' => [
+                ['name' => 'Hall 1', 'total_seats' => 96],
+                ['name' => 'Hall 2', 'total_seats' => 90],
+                ['name' => 'VIP Hall', 'total_seats' => 45],
+            ],
+        ];
 
-        // Legend Cinema1
-            [
-                'cinema_id'=>1,
-                'name'=>'Hall 1',
-                'total_seats'=>120,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'cinema_id'=>1,
-                'name'=>'Hall 2',
-                'total_seats'=>100,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'cinema_id'=>1,
-                'name'=>'VIP Hall',
-                'total_seats'=>40,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            // legend Cinema2
-            [
-                'cinema_id'=>2,
-                'name'=>'Hall 1',
-                'total_seats'=>100,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'cinema_id'=>2,
-                'name'=>'Hall 2',
-                'total_seats'=>120,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'cinema_id'=>2,
-                'name'=>'VIP Hall',
-                'total_seats'=>50,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
+        foreach ($halls as $cinemaName => $cinemaHalls) {
+            $cinema = Cinema::where('name', $cinemaName)->first();
 
-            // Sabay Cinema
-            [
-                'cinema_id'=>3,
-                'name'=>'Hall 1',
-                'total_seats'=>96,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'cinema_id'=>3,
-                'name'=>'Hall 2',
-                'total_seats'=>90,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
-            [
-                'cinema_id'=>3,
-                'name'=>'VIP Hall',
-                'total_seats'=>45,
-                'created_at'=>now(),
-                'updated_at'=>now()
-            ],
+            if (! $cinema) {
+                $this->command?->warn("Cinema [{$cinemaName}] not found, skipping its halls.");
+                continue;
+            }
 
-    ]);
-}
+            foreach ($cinemaHalls as $hall) {
+                Hall::updateOrCreate(
+                    ['cinema_id' => $cinema->id, 'name' => $hall['name']],
+                    $hall + ['cinema_id' => $cinema->id]
+                );
+            }
+        }
+    }
 }

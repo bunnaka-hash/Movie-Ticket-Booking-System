@@ -1,0 +1,23 @@
+@extends('layouts.admin')
+
+@section('content')
+
+<div>
+    <div class="mb-8">
+        <a href="{{ route('admin.users.index') }}" class="text-gray-400 hover:text-primary text-sm transition">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Users
+        </a>
+        <h1 class="text-4xl font-bold mt-3">Edit User</h1>
+        <p class="text-gray-400 mt-2">{{ $user->email }}</p>
+    </div>
+
+    <div class="bg-secondary p-6 rounded-xl border border-gray-800">
+        <form method="POST" action="{{ route('admin.users.update', $user) }}">
+            @csrf
+            @method('PUT')
+            @include('admin.users._form', ['submitLabel' => 'Save Changes'])
+        </form>
+    </div>
+</div>
+
+@endsection

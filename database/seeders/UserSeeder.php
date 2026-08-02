@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -11,39 +11,45 @@ class UserSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-{
-    \App\Models\User::insert([
+    {
+        $users = [
+            [
+                'name' => 'Admin User',
+                'email' => 'admin@gmail.com',
+                'role' => 'admin',
+                'phone' => '012345678',
+            ],
+            [
+                'name' => 'Cinema Staff',
+                'email' => 'staff@gmail.com',
+                'role' => 'staff',
+                'phone' => '012345679',
+            ],
+            [
+                'name' => 'John Customer',
+                'email' => 'customer@gmail.com',
+                'role' => 'customer',
+                'phone' => '012345680',
+            ],
+            [
+                'name' => 'Sokha Customer',
+                'email' => 'sokha@gmail.com',
+                'role' => 'customer',
+                'phone' => '012345681',
+            ],
+            [
+                'name' => 'Dara Customer',
+                'email' => 'dara@gmail.com',
+                'role' => 'customer',
+                'phone' => '012345682',
+            ],
+        ];
 
-        [
-            'name' => 'Admin User',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('password'),
-            'role' => 'admin',
-            'phone' => '012345678',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ],
-
-        [
-            'name' => 'Cinema Staff',
-            'email' => 'staff@gmial.com',
-            'password' => bcrypt('password'),
-            'role' => 'staff',
-            'phone' => '012345679',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ],
-
-        [
-            'name' => 'John Customer',
-            'email' => 'customer@gmail.com',
-            'password' => bcrypt('password'),
-            'role' => 'customer',
-            'phone' => '012345680',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]
-
-    ]);
-}
+        foreach ($users as $user) {
+            User::updateOrCreate(
+                ['email' => $user['email']],
+                $user + ['password' => 'password']
+            );
+        }
+    }
 }

@@ -2,10 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\ValidatesShowtimeSlot;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateShowtimeRequest extends FormRequest
 {
+    // Fills in end_time from the movie duration and rejects halls that are
+    // already busy at that time (ignoring this showtime itself).
+    use ValidatesShowtimeSlot;
+
     /**
      * Determine if the user is authorized to make this request.
      */

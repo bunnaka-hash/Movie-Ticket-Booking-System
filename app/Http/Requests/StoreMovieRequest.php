@@ -29,6 +29,8 @@ class StoreMovieRequest extends FormRequest
             'language' => 'required|string|max:100',
             'release_date' => 'required|date',
             'poster' => 'nullable|string|max:255',
+            // Admin form upload; the API keeps posting `poster` as a string.
+            'poster_file' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
             'trailer_url' => 'nullable|url',
             'rating' => 'nullable|numeric|min:0|max:10',
             'status' => 'required|in:coming_soon,now_showing,ended',

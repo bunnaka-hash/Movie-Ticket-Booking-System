@@ -102,9 +102,10 @@
                 <div class="group cursor-pointer">
                     <a href="{{ route('movies.show', $movie->id) }}" class="relative overflow-hidden rounded-lg mb-4 block">
                         <!-- Poster Image -->
-                        <img src="{{ $movie->poster_url ?? '/images/posters/placeholder.jpg' }}" 
+                        <img src="{{ $movie->poster_url }}"
                             alt="{{ $movie->title }}"
-                            class="w-full h-80 object-cover group-hover:scale-110 transition duration-300">
+                            onerror="this.onerror=null; this.src='{{ $movie->poster_placeholder }}';"
+                            class="w-full h-80 object-cover bg-secondary group-hover:scale-110 transition duration-300">
                         
                         <!-- Rating Badge -->
                         <div class="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full font-bold text-sm">

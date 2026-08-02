@@ -21,8 +21,20 @@ class UpdateMovieRequest extends FormRequest
      */
     public function rules(): array
     {
+        // `sometimes` so the API can PATCH a subset of fields, while the admin
+        // form (which posts every field) is still fully validated.
         return [
-            //
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|required|string',
+            'genre' => 'sometimes|required|string|max:100',
+            'duration' => 'sometimes|required|integer|min:1',
+            'language' => 'sometimes|required|string|max:100',
+            'release_date' => 'sometimes|required|date',
+            'poster' => 'nullable|string|max:255',
+            'poster_file' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
+            'trailer_url' => 'nullable|url',
+            'rating' => 'nullable|numeric|min:0|max:10',
+            'status' => 'sometimes|required|in:coming_soon,now_showing,ended',
         ];
     }
 }
