@@ -22,6 +22,17 @@ class Movie extends Model
         'status'
     ];
 
+    protected $casts = [
+        'release_date' => 'date',
+    ];
+
+    protected $appends = ['poster_url'];
+
+    public function getPosterUrlAttribute()
+    {
+        return $this->poster ?? '/images/posters/placeholder.jpg';
+    }
+
     public function showtimes(): HasMany
     {
         return $this->hasMany(Showtime::class);

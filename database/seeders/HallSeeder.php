@@ -14,29 +14,73 @@ class HallSeeder extends Seeder
 {
     \App\Models\Hall::insert([
 
-        [
-            'cinema_id'=>1,
-            'name'=>'Hall 1',
-            'total_seats'=>133,
-            'created_at'=>now(),
-            'updated_at'=>now()
-        ],
+        // Legend Cinema1
+            [
+                'cinema_id'=>1,
+                'name'=>'Hall 1',
+                'total_seats'=>120,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'cinema_id'=>1,
+                'name'=>'Hall 2',
+                'total_seats'=>100,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'cinema_id'=>1,
+                'name'=>'VIP Hall',
+                'total_seats'=>40,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            // legend Cinema2
+            [
+                'cinema_id'=>2,
+                'name'=>'Hall 1',
+                'total_seats'=>100,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'cinema_id'=>2,
+                'name'=>'Hall 2',
+                'total_seats'=>120,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'cinema_id'=>2,
+                'name'=>'VIP Hall',
+                'total_seats'=>50,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
 
-        [
-            'cinema_id'=>1,
-            'name'=>'Hall 2',
-            'total_seats'=>133,
-            'created_at'=>now(),
-            'updated_at'=>now()
-        ],
-
-        [
-            'cinema_id'=>2,
-            'name'=>'Hall 1',
-            'total_seats'=>161,
-            'created_at'=>now(),
-            'updated_at'=>now()
-        ]
+            // Sabay Cinema
+            [
+                'cinema_id'=>3,
+                'name'=>'Hall 1',
+                'total_seats'=>96,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'cinema_id'=>3,
+                'name'=>'Hall 2',
+                'total_seats'=>90,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+            [
+                'cinema_id'=>3,
+                'name'=>'VIP Hall',
+                'total_seats'=>45,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
 
     ]);
 }

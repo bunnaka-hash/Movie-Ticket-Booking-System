@@ -13,22 +13,33 @@ class CinemaSeeder extends Seeder
     public function run(): void
 {
     \App\Models\Cinema::insert([
-        [
-            'name' => 'Legend Cinema',
-            'address' => 'City Mall',
-            'city' => 'Phnom Penh',
-            'phone' => '023111111',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ],
-        [
-            'name' => 'Major Cineplex',
-            'address' => 'AEON Mall',
-            'city' => 'Phnom Penh',
-            'phone' => '023222222',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]
+    [
+                'name'=>'Legend Cinema1',
+                'address'=>'Aeon2 Mall',
+                'city'=>'Phnom Penh',
+                'phone'=>'023111111',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+
+            [
+                'name'=>'Legend Cinema2',
+                'address'=>'Chip Mong 271 Mall',
+                'city'=>'Phnom Penh',
+                'phone'=>'023222222',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+
+            [
+                'name'=>'Sabay Cinema',
+                'address'=>'Olympia Mall',
+                'city'=>'Phnom Penh',
+                'phone'=>'023333333',
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ],
+
     ]);
 }
 }

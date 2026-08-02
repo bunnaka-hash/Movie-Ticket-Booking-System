@@ -11,11 +11,11 @@ class MovieController extends Controller
     {
         $movies = Movie::latest()->paginate(12);
 
-        return view('pages.movies.index', compact('movies'));
+        return view('movies.index', compact('movies'));
     }
 
     public function show(Movie $movie)
     {
-        return view('pages.movies.show', compact('movie'));
+        return view('movies.show', compact('movie'));
     }
 }

@@ -18,8 +18,20 @@ use App\Http\Controllers\Web\MovieController;
 |
 */
 
+Route::get('/', [HomeController::class,'index'])->name('home');
 
+Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
+Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
 
+// Booking routes
+Route::get('/movies/{movie}/showtime', function($movie) {
+    $movie = \App\Models\Movie::findOrFail($movie);
+    return view('booking.showtime', compact('movie'));
+})->name('booking.showtime');
+
+Route::get('/booking/seats', function() {
+    return view('booking.seats');
+})->name('booking.seats');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -31,26 +43,45 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'admin'])
+->prefix('admin')
+->name('admin.')
+->group(function(){
 
+    Route::get('/dashboard', function(){
+        return view('admin.dashboard');
+    })->name('dashboard');
 
-Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
-Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
+    // Movies Resource
+    Route::get('/movies', function() {
+        return view('admin.movies.index');
+    })->name('movies.index');
 
+    // Cinemas Resource
+    Route::get('/cinemas', function() {
+        return view('admin.cinemas.index');
+    })->name('cinemas.index');
 
+    // Halls Resource
+    Route::get('/halls', function() {
+        return view('admin.halls.index');
+    })->name('halls.index');
 
-Route::get('/movies', [MovieController::class, 'index'])
-    ->name('movies.index');
+    // Showtimes Resource
+    Route::get('/showtimes', function() {
+        return view('admin.showtimes.index');
+    })->name('showtimes.index');
 
-Route::get('/movies/{movie}', [MovieController::class, 'show'])
-    ->name('movies.show');
+    // Bookings Resource
+    Route::get('/bookings', function() {
+        return view('admin.bookings.index');
+    })->name('bookings.index');
 
+    // Users Resource
+    Route::get('/users', function() {
+        return view('admin.users.index');
+    })->name('users.index');
 
-
-
-Route::get('/', [HomeController::class,'index'])->name('home');
-
-Route::get('/movies',[MovieController::class,'index'])->name('movies.index');
-
-Route::get('/movies/{movie}',[MovieController::class,'show'])->name('movies.show');
+});
 
 require __DIR__.'/auth.php';
